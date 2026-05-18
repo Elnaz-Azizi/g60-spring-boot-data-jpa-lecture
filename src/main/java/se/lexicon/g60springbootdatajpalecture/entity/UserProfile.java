@@ -1,10 +1,7 @@
-package se.lexicon.g60springbootdatajpalecture.model;
+package se.lexicon.g60springbootdatajpalecture.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 //@Table(name = "tbl-user_profile")
 /*
@@ -24,8 +21,8 @@ CREATE TABLE tbl_user_profile (){
 @EqualsAndHashCode
 
 @Entity
-@Table(name = "tbl_user_profile")
-public class UserProfile {
+//@Table(name = "tbl_user_profile")
+public class UserProfile {//user_profile
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +44,8 @@ public class UserProfile {
     @Column( length = 1000000) // around 1MB
     private byte[] profileImage;
 
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

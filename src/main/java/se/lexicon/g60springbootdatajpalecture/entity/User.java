@@ -29,4 +29,8 @@ public class User {
 
     @PrePersist
     private void prePersist(){ createDate = Instant.now();}
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserProfile userProfile;
+
 }

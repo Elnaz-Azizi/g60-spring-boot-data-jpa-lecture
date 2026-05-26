@@ -21,7 +21,7 @@ CREATE TABLE tbl_user_profile (){
 @EqualsAndHashCode
 
 @Entity
-//@Table(name = "tbl_user_profile")
+@Table(name ="user_profiles")
 public class UserProfile {//user_profile
 
     @Id
@@ -44,7 +44,7 @@ public class UserProfile {//user_profile
     @Column( length = 1000000) // around 1MB
     private byte[] profileImage;
 
-    @OneToOne
+    @OneToOne//(cascade = CascadeType.ALL, fetch = FetchType.EAGER) we decided to use casecade only from user side, when we insert user, we could insert user profile as well.
     @JoinColumn(name = "user_id")
     private User user;
 

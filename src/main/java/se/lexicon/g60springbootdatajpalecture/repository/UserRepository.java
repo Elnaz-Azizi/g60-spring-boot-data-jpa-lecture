@@ -22,6 +22,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // SELECT * FROM user WHERE create_date > ?
     List<User> findByCreateDateAfter(Instant date);
 
+    // SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM user WHERE email = ?
+    boolean existsByEmail(String email);
+
     //Native SQL
    /* @Query(value = "SELECT * FROM users WHERE full_name LIKE %:name%", nativeQuery = true)
     List<User> selectByFullNameContaining(@Param("name") String name);*/

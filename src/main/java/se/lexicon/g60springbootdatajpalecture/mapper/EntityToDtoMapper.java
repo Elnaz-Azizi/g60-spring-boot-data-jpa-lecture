@@ -2,6 +2,7 @@ package se.lexicon.g60springbootdatajpalecture.mapper;
 
 import org.springframework.stereotype.Component;
 import se.lexicon.g60springbootdatajpalecture.dto.request.EventRequestDTO;
+import se.lexicon.g60springbootdatajpalecture.dto.request.UserRequestDTO;
 import se.lexicon.g60springbootdatajpalecture.dto.response.EventResponseDTO;
 import se.lexicon.g60springbootdatajpalecture.dto.response.UserResponseDTO;
 import se.lexicon.g60springbootdatajpalecture.entity.Event;
@@ -13,6 +14,16 @@ import java.util.stream.Collectors;
 @Component
 public class EntityToDtoMapper {
 
+    // This method is to convert UserRequestDTO to User entity
+    public User toUserEntity(UserRequestDTO userRequestDTO) {
+        if (userRequestDTO == null) throw new IllegalArgumentException("User Request cannot be null");
+        User user = new User();
+        user.setEmail(userRequestDTO.email());
+        user.setFullName(userRequestDTO.fullName());
+        return user;
+    }
+
+    // This method is to convert User entity to UserResponseDTO
     public UserResponseDTO toUserResponseDTO(User user) {
         if (user == null) throw new IllegalArgumentException("User cannot be null");
         return new UserResponseDTO(
@@ -23,7 +34,9 @@ public class EntityToDtoMapper {
         );
     }
 
+// This method is to convert Event entity to EventResponseDTO
     public EventResponseDTO toEventResponseDTO(Event event) {
+        if (event == null) throw new IllegalArgumentException("Event cannot be null");
         EventResponseDTO eventResponseDTO = new EventResponseDTO(
                 event.getId(),
                 event.getTitle(),

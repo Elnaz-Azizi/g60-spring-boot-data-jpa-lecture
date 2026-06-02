@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.g60springbootdatajpalecture.dto.request.EventRequestDTO;
 import se.lexicon.g60springbootdatajpalecture.dto.response.EventResponseDTO;
 import se.lexicon.g60springbootdatajpalecture.entity.Event;
+import se.lexicon.g60springbootdatajpalecture.entity.EventStatus;
 import se.lexicon.g60springbootdatajpalecture.entity.User;
 import se.lexicon.g60springbootdatajpalecture.exception.DataNotFoundException;
 import se.lexicon.g60springbootdatajpalecture.mapper.EntityToDtoMapper;
@@ -69,5 +70,31 @@ public class EventServiceImpl implements EventService {
 
         event.addParticipant(participant);
         eventRepository.save(event);
+    }
+
+    // more methods here
+
+    @Override
+    @Transactional
+    public void removeParticipant(Long eventId, Long participantId) {
+        if (eventId == null || participantId == null)
+            throw new IllegalArgumentException("Event ID or participant ID cannot be null.");
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new DataNotFoundException("Event not found with ID: " + eventId));
+        User participant = userRepository.findById(participantId)
+                .orElseThrow(() -> new DataNotFoundException("User not found with ID: " + participantId));
+
+        event.removeParticipant(participant);
+        eventRepository.save(event);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<EventResponseDTO> findByStatus(String status) {
+        if (status == null) throw new IllegalArgumentException("Status cannot be null.");
+        return eventRepository.findByStatus(EventStatus.fromString(status))
+                .stream()
+                .map(mapper::toEventResponseDTO)
+                .toList();
     }
 }

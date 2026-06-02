@@ -16,5 +16,8 @@ public interface EventService {
 
     void addParticipant(Long eventId, Long participantId);
 
-    //add more methods as needed
+    // Add other methods as needed
+
+    void removeParticipant(Long eventId, Long participantId);
+    List<EventResponseDTO> findByStatus(String status);
 }

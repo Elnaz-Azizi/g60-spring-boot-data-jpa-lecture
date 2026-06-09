@@ -10,7 +10,9 @@ public interface UserService {
 
     UserResponseDTO register(UserRequestDTO userRequestDto);
 
-    Optional<UserResponseDTO> findById(Long id);
+    UserResponseDTO update(Long id, UserRequestDTO userRequestDto);
+
+    UserResponseDTO findById(Long id);
 
     List<UserResponseDTO> findAll();
 
